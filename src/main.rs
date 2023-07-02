@@ -9,8 +9,8 @@ struct Character {
 }
 
 impl Character {
-    fn new(name: String) -> Character {
-        Character {
+    fn new(name: String) -> Self {
+        Self {
             name,
             gender: true,
             experience: 0,
@@ -19,15 +19,44 @@ impl Character {
     }
 }
 
+struct Place {
+    title: String,
+    description: String,
+    ways: Vec<Way>,
+}
+
+impl Place {
+    fn new(title: String, description: String) -> Self {
+        Self {
+            title,
+            description,
+            ways: Vec::new(),
+        }
+    }
+
+    fn add_way(&mut self, way: Way) {
+        self.ways.push(way);
+    }
+}
+
+struct Way {
+    name: String,
+    // aliases: Vec<String>,
+    destination: Place,
+}
+
+impl Way {
+    fn new(name: String, destination: Place) -> Self {
+        Self {
+            name,
+            // aliases,
+            destination,
+        }
+    }
+}
+
 fn main() {
     // ⫷⫸⋙↪⇾⇢⇨→⁜†▶◄►◁▷○◜◝◢◣◧◨◯
-    println!(
-        "{}\n{}\n{}",
-        "(!) Green ooze drips from the ceiling (!)".red(),
-        "★ Settings ★".magenta(),
-        "<Deserted Village>".yellow(),
-    );
-    /*
     println!(
         "{}",
         "You're playing Miningcow's awesome text adventure game!".green()
@@ -42,6 +71,15 @@ fn main() {
     }
 
     let mut player = character_creation();
+
+    //create map
+    let mut start_place = Place::new(
+        String::from("Spawn Place"),
+        String::from("You are in the starting place."),
+    );
+    start_place.add_way(Way::new(String::from("")));
+    let mut current_place = &start_place;
+
     println!(
         "{} {}!",
         "Welcome to the ill mind of Miningcow,".green(),
@@ -54,7 +92,6 @@ fn main() {
 
         println!("You inputted: {input}. There is no game yet :P CTRL + C to quit.");
     }
-    */
 }
 
 fn check_if_player_allowed() -> bool {
